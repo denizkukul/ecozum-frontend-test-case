@@ -6,10 +6,11 @@ const initialState = {
   page: 'signup',
   user: null,
   terms: null,
-  packageIDs: [],
-  selectedIDs: [],
+  packageIds: [],
+  selectedIds: [],
   packages: {},
-  total: 0
+  totalCost: 0,
+  currency: ''
 }
 
 export const appReducer = createReducer(
@@ -24,13 +25,15 @@ export const appReducer = createReducer(
         state.user = action.payload;
       })
       .addCase(getPackages.fulfilled, (state, action) => {
-        const packageIDs = [];
+        const packageIds = [];
         const packages = {};
         action.payload.forEach(item => {
-          packageIDs.push(item.id);
-          packages[item.id] = { ...item, selected: false };
+          const id = String(item.id);
+          packageIds.push(id);
+          packages[id] = { ...item, selected: false };
         })
-        state.packageIDs = packageIDs;
+        state.currency = action.payload[0].currency;
+        state.packageIds = packageIds;
         state.packages = packages;
         state.status = 'idle';
       })
@@ -50,18 +53,18 @@ export const appReducer = createReducer(
         state.page = 'payment';
       })
       .addCase(togglePackage, (state, action) => {
-        const packageID = action.payload;
-        const packageData = state.packages[packageID];
+        const packageId = action.payload;
+        const packageData = state.packages[packageId];
         const selected = packageData.selected;
-        state.packages[packageID].selected = !selected;
+        state.packages[packageId].selected = !selected;
         if (selected) {
-          let index = state.selectedIDs.indexOf(packageID);
-          state.selectedIDs.splice(index, 1);
-          state.total -= packageData.amount;
+          let index = state.selectedIds.indexOf(packageId);
+          state.selectedIds.splice(index, 1);
+          state.totalCost -= packageData.amount;
         }
         else {
-          state.selectedIDs.push(packageID);
-          state.total += packageData.amount;
+          state.selectedIds.push(packageId);
+          state.totalCost += packageData.amount;
         }
       })
       .addDefaultCase(state => state)

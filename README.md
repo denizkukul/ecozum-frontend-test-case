@@ -1,23 +1,27 @@
-# Getting Started with Create React App
+# E-Çözüm Test Case
+
+#### [Preview with mock API](https://ecozum-test-case-mockapi.netlify.app/)
+#### [Preview with real API](https://ecozum-test-case.netlify.app/)
+
+## Usage
+
+### `npm install --legacy-peer-deps`
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
+In order to use [AntDesign](https://ant.design/) and less-loader with create react app, cra configurations are modified with [craco](https://www.npmjs.com/package/@craco/craco). 
+
+Configuration changes causes peer dependency conflicts and project must be installed with `legacy-peer-deps` flag.
+
 ## Available Scripts
 
-In the project directory, you can run:
-
-### `npm start`
+### `npm run start`
 
 Runs the app in the development mode.\
 Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
 
 The page will reload when you make changes.\
 You may also see any lint errors in the console.
-
-### `npm test`
-
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
 
 ### `npm run build`
 

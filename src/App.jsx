@@ -1,15 +1,17 @@
-import './App.css';
+import './App.less';
 import { useDispatch, useSelector } from 'react-redux';
-import { SignupPage } from './pages/SignupPage';
-import { ResultPage } from './pages/ResultPage';
-import { Loading } from './components/Loading';
-import { PackagesPage } from './pages/PackagesPage';
-import { PaymentPage } from './pages/PaymentPage';
+import { SignupPage, PackagesPage, PaymentPage, ResultPage } from './pages';
 import { useEffect } from 'react';
 import { getPackages, getTerms } from './store/actions';
+import { Image, Layout, Spin } from 'antd';
+import { UserInfo } from './components/UserInfo/UserInfo';
+import logo from './assets/logo.png';
+
+const { Header, Content } = Layout
 
 const App = () => {
   const dispatch = useDispatch();
+  const user = useSelector(state => state.user);
   const page = useSelector(state => state.page);
   const appStatus = useSelector(state => state.status);
   let currentPage;
@@ -28,17 +30,32 @@ const App = () => {
       break;
     case 'result': currentPage = <ResultPage />
       break;
-    default: currentPage = <Loading />
+    default: currentPage = <Spin size='large' />
   }
 
+  const renderHeader = !(page === 'signup' || (page === 'packages' && appStatus === 'loading'))
+
   return (
-    <div className="App">
+    <Layout>
       {
-        appStatus === 'loading' ?
-          <Loading /> :
-          currentPage
+        renderHeader &&
+        <Header>
+          <div className='container'>
+            <Image src={logo} preview={false} />
+            <UserInfo name={user.fullName} />
+          </div>
+        </Header>
       }
-    </div>
+      <Content>
+        <div className='container'>
+          {
+            appStatus === 'loading' ?
+              <Spin size='large' /> :
+              currentPage
+          }
+        </div>
+      </Content>
+    </Layout>
   );
 }
 
