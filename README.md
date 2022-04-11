@@ -1,7 +1,7 @@
 # E-Çözüm Test Case
 
-#### [Preview with mock API](https://ecozum-test-case-mockapi.netlify.app/)
-#### [Preview with real API](https://ecozum-test-case.netlify.app/)
+### [Preview with mock API](https://ecozum-test-case-mockapi.netlify.app/)
+### [Preview with real API](https://ecozum-test-case.netlify.app/)
 
 ## Usage
 
